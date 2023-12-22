@@ -11,11 +11,11 @@ interface WidgetProps {
 const fetchData = async (city: string) => {
 
   console.log('environnemnt : ', process.env.NODE_ENV);
-  const API_KEY = process.env.API_KEY;
+  const API_KEY = process.env.NEXT_API_KEY;
 
   // on va chercher l'url dans le fichier .env.development.local car process.env.NODE_ENV vaut developement
   // en prod on ira chercher dans .env.production.local
-  const API_URL = process.env.API_URL;
+  const API_URL = process.env.NEXT_API_URL;
   const response = await fetch(`${API_URL}/weather?q=${city}&units=metric&appid=${API_KEY}`);
   const result = await response.json();
   return result;

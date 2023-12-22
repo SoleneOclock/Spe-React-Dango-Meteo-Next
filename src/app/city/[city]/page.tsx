@@ -2,8 +2,8 @@ import WeatherData from '@/@types/weather';
 import Image from 'next/image';
 
 const fetchData = async (city: string) => {
-  const API_KEY = process.env.API_KEY;
-  const API_URL = process.env.API_URL;
+  const API_KEY = process.env.NEXT_API_KEY;
+  const API_URL = process.env.NEXT_API_URL;
   try {
     const response = await fetch(`${API_URL}/weather?q=${city}&units=metric&appid=${API_KEY}&lang=fr`);
     const result = await response.json();
