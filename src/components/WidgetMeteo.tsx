@@ -7,7 +7,9 @@ interface WidgetProps {
 }
 
 const fetchData = async (city: string) => {
-  const API_KEY = '47840f4f526d9cc69b4b575c52495860';
+  
+  console.log('environnemnt : ', process.env.NODE_ENV);
+  const API_KEY = process.env.API_KEY;
   const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
   const result = await response.json();
   return result;
@@ -18,7 +20,7 @@ const fetchData = async (city: string) => {
 async function WidgetMeteo({ city, code }: WidgetProps) {
 
   const data = await fetchData(city) as WeatherData;
-  console.log(data);
+  // console.log(data);
   // les console.log des server components se font dans la console coté server : le terminal
   const temp = Math.round(data.main.temp);
   const icon = data.weather[0].icon;
