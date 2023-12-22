@@ -14,13 +14,16 @@ const fetchData = async (city: string) => {
   }
 }
 
-async function City({ params }) {
-
+async function City({ params }: {
+  params: {
+    city: string;
+  }
+}) {
   const data = await fetchData(params.city) as WeatherData;
+  // recuperer la ville du param dynamique de l'URL 
+  console.log(params);
 
-  if (data.cod === 200) {
-    // recuperer la ville du param dynamique de l'URL 
-    console.log(params);
+  if (data.cod === 200) {    
     return (
       <main className="flex min-h-screen flex-col items-center p-5 bg-gradient-to-bl from-sky-800 to-sky-200">
         <div className="bg-white/20 p-5 rounded-md border-solid border-white border-2 m-4 w-8/12 flex items-center justify-between">
