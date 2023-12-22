@@ -1,4 +1,5 @@
 import WeatherData from '@/@types/weather';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
 
@@ -33,11 +34,12 @@ async function WidgetMeteo({ city, code }: WidgetProps) {
   return (
     <Link href={`/city/${city}`} className="bg-white/20 p-5 rounded-md border-solid border-white border-2 m-4 w-8/12 flex items-center justify-between">
       <div>
+        ❤️
         <div className="font-bold text-xl">{city}</div>
         <div className="text-sm">{code}</div>
         <div className="font-bold text-2xl">{temp}°C</div>
       </div>
-      <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />
+      <Image alt="icon" src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />
     </Link>
   )
 }

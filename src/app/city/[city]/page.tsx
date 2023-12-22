@@ -1,7 +1,7 @@
 import WeatherData from '@/@types/weather';
+import Image from 'next/image';
 
 const fetchData = async (city: string) => {
-
   const API_KEY = process.env.API_KEY;
   const API_URL = process.env.API_URL;
   try {
@@ -30,14 +30,14 @@ async function City({ params }: {
           <h1>{params.city}</h1>
           <div>{data.main.temp}</div>
           <div>{data.weather[0].description}</div>
-          <img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} />
+          <Image src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="image" />
         </div>
       </main>
     )
   }
   return (
     <main className="flex min-h-screen flex-col items-center p-5 bg-gradient-to-bl from-sky-800 to-sky-200">
-      Cette ville n'existe pas !!
+      Cette ville nexiste pas !!
     </main>
   )
 
