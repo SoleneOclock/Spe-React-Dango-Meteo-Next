@@ -1,4 +1,4 @@
-"use client";
+import WeatherData from '@/@types/weather';
 import { useEffect } from 'react';
 
 interface WidgetProps {
@@ -6,28 +6,31 @@ interface WidgetProps {
   code: string;
 }
 
+const fetchData = async (city: string) => {
+  const API_KEY = '47840f4f526d9cc69b4b575c52495860';
+  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
+  const result = await response.json();
+  return result;
+}
+
 // si je ne precise rien ce composant est un server components
-function WidgetMeteo({ city, code }: WidgetProps) {
+// il est executé coté server , il peut etre asynchrone
+async function WidgetMeteo({ city, code }: WidgetProps) {
 
-  const fetchData = async () => {
-    const API_KEY = '47840f4f526d9cc69b4b575c52495860';
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`);
-    const result = await response.json();
-    console.log(result);
-  }
-
-  // on veut recuperer la temperature correspondante aux props
-  useEffect(() => {
-    // on fetch la temperature
-    // on va  l'enregistrer dans le state : ça va redeclancher un rendu et l'afficher
-    fetchData();
-  }, []);
+  const data = await fetchData(city) as WeatherData;
+  console.log(data);
+  // les console.log des server components se font dans la console coté server : le terminal
+  const temp = Math.round(data.main.temp);
+  const icon = data.weather[0].icon;
 
   return (
-    <div className="bg-white/20 p-5 rounded-md border-solid border-white border-2 m-4 w-8/12">
-      <div className="font-bold text-xl">{city}</div>
-      <div className="text-sm">{code}</div>
-      <div className="font-bold text-2xl">10°C</div>
+    <div className="bg-white/20 p-5 rounded-md border-solid border-white border-2 m-4 w-8/12 flex items-center justify-between">
+      <div>
+        <div className="font-bold text-xl">{city}</div>
+        <div className="text-sm">{code}</div>
+        <div className="font-bold text-2xl">{temp}°C</div>
+      </div>
+      <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />
     </div>
   )
 }
